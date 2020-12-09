@@ -1,3 +1,3 @@
-import { TStoreUser } from "./reducer";
+import { TStoreQuestion } from "./reducer";
 
-export const getUsers = (state: TStoreUser) => state;
+export const getQuestions = (state: TStoreQuestion) => state;

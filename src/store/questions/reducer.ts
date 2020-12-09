@@ -1,32 +1,20 @@
 import { Map } from "immutable";
 import { ActionTypesInfer } from "src/store/actionTypes";
-import User from "src/models/user";
+import Question from "src/models/question";
 import * as types from "./types";
 import * as actions from "./actions";
 
-export type TStoreUser = Map<User["id"], User>;
+export type TStoreQuestion = Map<Question["id"], Question>;
 
-const reducer = (state: TStoreUser = Map(), action: ActionTypesInfer<typeof actions>) => {
+const reducer = (state: TStoreQuestion = Map(), action: ActionTypesInfer<typeof actions>) => {
     switch (action.type) {
-        case types.LOAD_USERS_SUCCESS:
-            action.users.forEach((user: User) => {
-                if (!state.has(user.id)) {
-                    state = state.set(user.id, user);
+        case types.LOAD_QUESTIONS_SUCCESS:
+            action.questions.forEach((question: Question) => {
+                if (!state.has(question.id)) {
+                    state = state.set(question.id, question);
                 }
             });
             return state;
-
-        case types.LOAD_USER_BY_ID_SUCCESS:
-            if (!state.has(action.user.id)) {
-                state = state.set(action.user.id, action.user);
-            }
-            return state;
-
-        case types.CREATE_USER_SUCCESS:
-            return state.set(action.user.id, action.user);
-
-        case types.UPDATE_USER_SUCCESS:
-            return state.set(action.user.id, action.user);
 
         default:
             return state;

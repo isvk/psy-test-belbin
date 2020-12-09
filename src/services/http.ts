@@ -22,16 +22,8 @@ export default class Http implements IHttp {
     };
 
     request = (method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET", url: string, data?: {}) => {
-        const headers = {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        };
-
-        const token = localStorage.getItem("token");
-
-        return fetch("https://emphasoft-test-assignment.herokuapp.com" + url, {
+        return fetch("/api" + url, {
             method,
-            headers: token ? { ...headers, Authorization: "Token " + token } : headers,
             body: method !== "GET" ? JSON.stringify(data) : undefined,
         }).then((response) => {
             if (response.ok) {
