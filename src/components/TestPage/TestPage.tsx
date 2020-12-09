@@ -11,9 +11,11 @@ import Alert from "src/components/Alert/Alert";
 import LoadBlocks from "src/components/Loading/LoadBlocks";
 import LoadRoles from "src/components/Loading/LoadRoles";
 import LoadQuestions from "src/components/Loading/LoadQuestions";
+import { Link as RouterLink } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
+import Button from "@material-ui/core/Button";
 
 export default function TestPage() {
     const dispatch = useCustomDispatch();
@@ -49,19 +51,19 @@ export default function TestPage() {
         return <Alert type="preload" text="Загрузка вопросов" />;
     } else if (statusAsync.loadQuestions === loadStatus.errorServer) {
         return <Alert type="warning" text="Ошибка загрузки вопросов" />;
-    } else if (questions.size > 0) {
+    } else if (questions.size > 0 && currentBlock) {
         return (
             <div>
                 <Typography gutterBottom variant={"h5"} component={"h1"}>
-                    Страница прохождения теста
+                    Тест Белбина на вашу роль в команде – пройти тест онлайн
                 </Typography>
 
                 <Typography gutterBottom variant={"h6"} component={"h2"}>
-                    Часть {currentBlock?.id} из {blocks.size}
+                    Часть {currentBlock.id} из {blocks.size}
                 </Typography>
 
                 <Typography gutterBottom variant={"h6"} component={"h2"}>
-                    {currentBlock?.title}
+                    {currentBlock.title}
                 </Typography>
 
                 {questions.valueSeq().map((question) => (
@@ -93,6 +95,28 @@ export default function TestPage() {
                         </WrapperSlider>
                     </WrapperQuestion>
                 ))}
+
+                <WrapperControlPanel>
+                    {sumValueQuestions < 10 && (
+                        <Warning>
+                            <Typography>
+                                Нужно распределить {possibleMaximumValueQuestion} из 10 баллов для продолжение теста
+                            </Typography>
+                        </Warning>
+                    )}
+
+                    {currentBlock.id < blocks.size && (
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            to={"/block/" + (Number(idBlock) + 1)}
+                            component={RouterLink}
+                            disabled={sumValueQuestions < 10}
+                        >
+                            Далее
+                        </Button>
+                    )}
+                </WrapperControlPanel>
             </div>
         );
     }
@@ -112,6 +136,18 @@ const WrapperSlider = styled.div`
 const WrapperLabel = styled.div`
     padding-bottom: 1.75em;
     user-select: none;
+`;
+
+const WrapperControlPanel = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin: 1em 0;
+`;
+
+const Warning = styled.div`
+    display: flex;
+    align-items: flex-end;
+    padding-right: 1em;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
