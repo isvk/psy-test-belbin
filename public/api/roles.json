@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Реализатор",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 2,
+    "name": "Координатор",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 3,
+    "name": "Творец",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 4,
+    "name": "Генератор идей",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 5,
+    "name": "Исследователь",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 6,
+    "name": "Эксперт",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 7,
+    "name": "Реализатор",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 8,
+    "name": "Дипломат",
+    "characteristic": "",
+    "functionality": ""
+  },
+  {
+    "id": 9,
+    "name": "Исполнитель",
+    "characteristic": "",
+    "functionality": ""
+  }
+]
