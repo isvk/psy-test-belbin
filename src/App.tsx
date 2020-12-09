@@ -1,13 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import TestPage from "src/components/TestPage/TestPage";
 
 function App() {
     return (
         <Wrapper>
             <Switch>
-                <Route exact path="/" component={TestPage} />
+                <Route exact path="/">
+                    <Redirect to="/block/1" />
+                </Route>
+                <Route exact path="/block/:idBlock" component={TestPage} />
             </Switch>
         </Wrapper>
     );
