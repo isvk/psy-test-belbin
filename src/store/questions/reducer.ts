@@ -16,6 +16,11 @@ const reducer = (state: TStoreQuestion = Map(), action: ActionTypesInfer<typeof 
             });
             return state;
 
+        case types.SET_VALUE:
+            return state.map((question) =>
+                question.id === action.id ? question.set("value", action.value) : question
+            );
+
         default:
             return state;
     }

@@ -8,3 +8,6 @@ export const mainState = (state: Readonly<IStore>) => state.main;
 export const mainGetStatusAsync = createSelector(mainState, getStatusAsync);
 
 export const questionState = (state: Readonly<IStore>) => state.questions;
+export const questionsGetQuestionByBlock = createSelector(questionState, propsFirstSelector, (questions, id) => {
+    return questions.filter((question) => question.block === id);
+});
