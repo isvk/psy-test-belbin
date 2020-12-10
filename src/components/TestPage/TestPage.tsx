@@ -12,7 +12,6 @@ import LoadBlocks from "src/components/Loading/LoadBlocks";
 import LoadRoles from "src/components/Loading/LoadRoles";
 import LoadQuestions from "src/components/Loading/LoadQuestions";
 import { Link as RouterLink } from "react-router-dom";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
@@ -24,16 +23,13 @@ export default function TestPage() {
     const blocks = useCustomSelector(blockState);
     const currentBlock = blocks.find((block) => block.id === Number(idBlock));
     const questions = useCustomSelector(questionsGetQuestionByBlock, currentBlock?.id);
-    const classes = useStyles();
 
     const sumValueQuestions = questions.reduce<number>((sum, question) => sum + question.value, 0);
     const possibleMaximumValueQuestion = 10 - sumValueQuestions;
 
     const handleChangeQuestion = (event: any, newValue: number | number[], id: IQuestion["id"]) => {
-        if (sumValueQuestions < 10) {
+        if (questions.find((q) => q.id === id)?.value !== Number(newValue)) {
             dispatch(setValue(id, Number(newValue)));
-        } else {
-            dispatch(setValue(id, Number(newValue) - (sumValueQuestions - 10)));
         }
     };
 
@@ -75,23 +71,24 @@ export default function TestPage() {
                         </WrapperLabel>
 
                         <WrapperSlider paddingRight={(question.value + possibleMaximumValueQuestion) * 10}>
-                            <div className={classes.root}>
-                                <Slider
-                                    onChange={(event: any, newValue: number | number[]) =>
-                                        handleChangeQuestion(event, newValue, question.id)
-                                    }
-                                    value={question.value}
-                                    defaultValue={0}
-                                    aria-labelledby={"slider-question-" + question.id}
-                                    aria-valuemax={5}
-                                    step={1}
-                                    min={0}
-                                    max={question.value + possibleMaximumValueQuestion}
-                                    valueLabelDisplay="on"
-                                    marks={marks()}
-                                    disabled={question.value + possibleMaximumValueQuestion === 0}
-                                />
-                            </div>
+                            <Slider
+                                onChange={(event: any, newValue: number | number[]) =>
+                                    handleChangeQuestion(event, newValue, question.id)
+                                }
+                                value={question.value}
+                                defaultValue={0}
+                                aria-labelledby={"slider-question-" + question.id}
+                                step={1}
+                                min={0}
+                                max={
+                                    question.value + possibleMaximumValueQuestion === 0
+                                        ? 1
+                                        : question.value + possibleMaximumValueQuestion
+                                }
+                                valueLabelDisplay="on"
+                                marks={marks}
+                                disabled={question.value + possibleMaximumValueQuestion === 0}
+                            />
                         </WrapperSlider>
                     </WrapperQuestion>
                 ))}
@@ -109,11 +106,23 @@ export default function TestPage() {
                         <Button
                             variant="contained"
                             color="primary"
-                            to={"/block/" + (Number(idBlock) + 1)}
+                            to={"/block/" + (currentBlock.id + 1)}
                             component={RouterLink}
                             disabled={sumValueQuestions < 10}
                         >
                             Далее
+                        </Button>
+                    )}
+
+                    {currentBlock.id === blocks.size && (
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            to="/test_result"
+                            component={RouterLink}
+                            disabled={sumValueQuestions < 10}
+                        >
+                            Результат
                         </Button>
                     )}
                 </WrapperControlPanel>
@@ -131,6 +140,7 @@ const WrapperQuestion = styled.div`
 const WrapperSlider = styled.div`
     display: flex;
     width: ${(props: { paddingRight: number }) => (props.paddingRight > 0 ? props.paddingRight : 10)}%;
+    user-select: none;
 `;
 
 const WrapperLabel = styled.div`
@@ -150,19 +160,16 @@ const Warning = styled.div`
     padding-right: 1em;
 `;
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: "100%",
-        },
-        margin: {
-            height: theme.spacing(3),
-        },
-    })
-);
-
-const marks = () => {
-    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((mark) => {
-        return { value: mark, label: mark + "" };
-    });
-};
+const marks = [
+    { value: 0, label: "0" },
+    { value: 1, label: "1" },
+    { value: 2, label: "2" },
+    { value: 3, label: "3" },
+    { value: 4, label: "4" },
+    { value: 5, label: "5" },
+    { value: 6, label: "6" },
+    { value: 7, label: "7" },
+    { value: 8, label: "8" },
+    { value: 9, label: "9" },
+    { value: 10, label: "10" },
+];
