@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import TestPage from "src/components/TestPage/TestPage";
 import ResultPage from "src/components/ResultPage/ResultPage";
 import TechnicalCheckPage from "src/components/TechnicalCheckPage/TechnicalCheckPage";
 
 function App() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     return (
         <Wrapper>
             <Switch>
