@@ -1,4 +1,5 @@
 import { IHttp } from "./IHttp";
+import * as packageJson from "../../package.json";
 
 export default class Http implements IHttp {
     get = (url: string, data?: object) => {
@@ -22,7 +23,7 @@ export default class Http implements IHttp {
     };
 
     request = (method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET", url: string, data?: {}) => {
-        return fetch("/api" + url, {
+        return fetch(packageJson.homepage + "/api" + url, {
             method,
             body: method !== "GET" ? JSON.stringify(data) : undefined,
         }).then((response) => {

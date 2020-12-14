@@ -4,6 +4,7 @@ import Question from "src/models/question";
 export interface IReadApiQuestion {
     id: number;
     block: number;
+    role: number;
     text: string;
 }
 

@@ -28,8 +28,11 @@ function App() {
 
 const Wrapper = styled.div`
     max-width: 935px;
-    margin: 0 auto;
-    padding: 0 1em;
+    margin: 0 auto 3em auto;
+    padding: 1em 1em 0 1em;
+    @media (max-width: 768px) {
+        margin-bottom: 7em;
+    }
 `;
 
 export default App;
