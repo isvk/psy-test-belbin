@@ -54,6 +54,8 @@ export default function TestPage() {
         return <LoadRoles />;
     }
 
+    /*Беги, просто беги!*/
+
     if (statusAsync.loadQuestions === loadStatus.notLoaded && questions.size === 0) {
         return <LoadQuestions />;
     } else if (statusAsync.loadQuestions === loadStatus.load) {
